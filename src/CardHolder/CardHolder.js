@@ -1,9 +1,22 @@
 import React from 'react';
+import '../CardHolder/CardHolder.css'
 
 const CardHolder = (props) => {
+    let data = null;
+    
+    if(props.loaded) {
+        data = props.Cards
+    }
+    else if(props.loaded === null) {
+       data = null
+    }
+    else {
+         data = <div className="loader"></div>
+    }
+    
     return (
         <div className="row">
-            {props.Cards}
+            {data}
         </div>
     )
 }

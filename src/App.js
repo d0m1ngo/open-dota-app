@@ -9,7 +9,7 @@ import CardHolder from './CardHolder/CardHolder'
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: '', cardArray: [], dataIsLoading: true }
+    this.state = { value: '', cardArray: [], isDataLoaded: null }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -22,6 +22,7 @@ class App extends Component {
 
   handleClick(event) {
     this.getData(this.state.value);
+    this.setState({isDataLoaded:false})
   }
 
   getData(value) {
@@ -36,7 +37,7 @@ class App extends Component {
             <Card key={profile.account_id} avatar={profile.avatarfull} personaname={profile.personaname} />
           )
         })
-        this.setState({ cardArray: cardArray });
+        this.setState({ cardArray: cardArray, isDataLoaded: true });
       })
       .catch(function (error) {
         console.log(error);
@@ -49,7 +50,7 @@ class App extends Component {
         <div className="container-fluid">
           <Header />
           <Input handleChange={this.handleChange} value={this.state.value} handleClick={this.handleClick} />
-          <CardHolder Cards={this.state.cardArray} />
+          <CardHolder Cards={this.state.cardArray} loaded={this.state.isDataLoaded} />
         </div>
       </div>
     );
